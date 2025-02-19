@@ -5,6 +5,7 @@ const Administration = require('./models/administration');
 const Specialite = require('./models/specialite');
 const Type_etablissement = require('./models/type_etablissement');
 const Type_synthese_medicale = require('./models/type_synthese_medicale');
+const Assurance_sante = require('./models/assurance_sante');
 require('dotenv').config();
 
 const app = express();
@@ -235,6 +236,55 @@ app.get('/type_synthese_medicale/:id_type_synthese_medicale', async (req, res) =
     try {
         const type_synthese_medicale = await Type_synthese_medicale.getType_synthese_medicaleById(req.params.id_type_synthese_medicale);
         type_synthese_medicale ? res.status(200).json(type_synthese_medicale) : res.status(404).json({ message: "Type_synthese_medicale non trouvé" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
+
+// Endpoints assurance_sante
+
+app.post('/assurance_sante', async (req, res) => {
+    try {
+        const newAssurance_sante = await Assurance_sante.createAssurance_sante(req.body);
+        res.status(201).json({ newAssurance_sante });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/assurance_sante', async (req, res) => {
+    try {
+        const assurance_sante = await Assurance_sante.getAllAssurance_sante();
+        res.status(200).json(assurance_sante);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/assurance_sante/:id_assurance_sante', async (req, res) => {
+    try {
+        const assurance_sante = await Assurance_sante.getAssurance_santeById(req.params.id_assurance_sante);
+        assurance_sante ? res.status(200).json(assurance_sante) : res.status(404).json({ message: "Assurance_sante non trouvé" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.put('/assurance_sante/:id_assurance_sante', async (req, res) => {
+    try {
+        const updateAssurance_sante = await Assurance_sante.updateAssurance_sante(req.params.id_assurance_sante, req.body);
+        res.status(200).json({ updateAssurance_sante });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.delete('/assurance_sante/:id_assurance_sante', async (req, res) => {
+    try {
+        await Assurance_sante.deleteAssurance_sante(req.params.id_assurance_sante);
+        res.status(204).send();
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
