@@ -96,7 +96,7 @@ app.put('/patient/:id_patient', async (req, res) => {
 
 app.get('/patient', async (req, res) => {
     try {
-        const patient = await Patient.getAllUser();
+        const patient = await Patient.getAllPatient();
         res.status(200).json(patient);
     } catch (error) {
         res.status(500).json({ error: error.message });
