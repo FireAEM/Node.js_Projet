@@ -3,6 +3,7 @@ const Utilisateur = require('./models/utilisateur');
 const Patient = require('./models/patient');
 const Administration = require('./models/administration');
 const Specialite = require('./models/specialite');
+const Type_etablissement = require('./models/type_etablissement');
 require('dotenv').config();
 
 const app = express();
@@ -171,6 +172,35 @@ app.get('/specialite/:id_specialite', async (req, res) => {
     try {
         const specialite = await Specialite.getSpecialiteById(req.params.id_specialite);
         specialite ? res.status(200).json(specialite) : res.status(404).json({ message: "Specialite non trouvé" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+//EndPoint type_etablissement
+
+app.post('/type_etablissement', async (req, res) => {
+    try {
+        const newtype_etablissement = await Type_etablissement.createType_etablissement(req.body);
+        res.status(201).json({ newtype_etablissement });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/type_etablissement', async (req, res) => {
+    try {
+        const type_etablissement = await Type_etablissement.getAllType_etablissement();
+        res.status(200).json(type_etablissement);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/type_etablissement/:id_type_etablissement', async (req, res) => {
+    try {
+        const type_etablissement = await Type_etablissement.getType_etablissementById(req.params.id_type_etablissement);
+        type_etablissement ? res.status(200).json(type_etablissement) : res.status(404).json({ message: "Type etablissement non trouvé" });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
