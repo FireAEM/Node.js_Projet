@@ -35,8 +35,8 @@ CREATE TABLE type_synthese_medicale(
    nom VARCHAR(255) NOT NULL UNIQUE
 );
 
-CREATE TABLE mode_de_paiment(
-   id_mode_de_paiment SERIAL PRIMARY KEY,
+CREATE TABLE mode_de_paiement(
+   id_mode_de_paiement SERIAL PRIMARY KEY,
    nom VARCHAR(255) NOT NULL UNIQUE
 );
 
@@ -82,10 +82,10 @@ CREATE TABLE rendez_vous(
 CREATE TABLE facturation(
    id_facturation SERIAL PRIMARY KEY,
    montant NUMERIC(10, 2) NOT NULL,
-   id_mode_de_paiment INT NOT NULL,
+   id_mode_de_paiement INT NOT NULL,
    id_rendez_vous INT NOT NULL UNIQUE,
    id_assurance_sante INT,
-   FOREIGN KEY(id_mode_de_paiment) REFERENCES mode_de_paiment(id_mode_de_paiment),
+   FOREIGN KEY(id_mode_de_paiement) REFERENCES mode_de_paiement(id_mode_de_paiement),
    FOREIGN KEY(id_rendez_vous) REFERENCES rendez_vous(id_rendez_vous) ON DELETE CASCADE,
    FOREIGN KEY(id_assurance_sante) REFERENCES assurance_sante(id_assurance_sante)
 );
