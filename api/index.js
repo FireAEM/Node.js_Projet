@@ -180,6 +180,37 @@ app.get('/specialite/:id_specialite', async (req, res) => {
 
 
 
+//EndPoint type_etablissement
+
+app.post('/type_etablissement', async (req, res) => {
+    try {
+        const newtype_etablissement = await Type_etablissement.createType_etablissement(req.body);
+        res.status(201).json({ newtype_etablissement });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/type_etablissement', async (req, res) => {
+    try {
+        const type_etablissement = await Type_etablissement.getAllType_etablissement();
+        res.status(200).json(type_etablissement);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/type_etablissement/:id_type_etablissement', async (req, res) => {
+    try {
+        const type_etablissement = await Type_etablissement.getType_etablissementById(req.params.id_type_etablissement);
+        type_etablissement ? res.status(200).json(type_etablissement) : res.status(404).json({ message: "Type etablissement non trouvé" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
+
 // Endpoints type_synthese_medicale
 
 app.post('/type_synthese_medicale', async (req, res) => {
