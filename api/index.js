@@ -1,6 +1,7 @@
 const express = require('express');
 const Utilisateur = require('./models/utilisateur');
 const Patient = require('./models/patient')
+const Administration = require('./models/administration')
 require('dotenv').config();
 
 const app = express();
@@ -47,8 +48,8 @@ app.post('/utilisateur/connexion', async (req, res) => {
 
 app.post('/utilisateur', async (req, res) => {
     try {
-        const newuser = await Utilisateur.createUser(req.body);
-        res.status(201).json({ newuser });
+        const newUser = await Utilisateur.createUser(req.body);
+        res.status(201).json({ newUser });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -78,8 +79,8 @@ app.delete('/utilisateur/:id_utilisateur', async (req, res) => {
 
 app.post('/patient', async (req, res) => {
     try {
-        const newpatient = await Patient.createPatient(req.body);
-        res.status(201).json({ newpatient });
+        const newPatient = await Patient.createPatient(req.body);
+        res.status(201).json({ newPatient });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -112,6 +113,36 @@ app.get('/patient/:id_patient', async (req, res) => {
     }
 });
 
+
+
+// Endpoints administration
+
+app.post('/administration', async (req, res) => {
+    try {
+        const newAdministration = await Administration.createAdmin(req.body);
+        res.status(201).json({ newAdministration });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/administration', async (req, res) => {
+    try {
+        const administration = await Administration.getAllAdmin();
+        res.status(200).json(administration);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/administration/:id_administration', async (req, res) => {
+    try {
+        const administration = await Administration.getAdminById(req.params.id_administration);
+        administration ? res.status(200).json(administration) : res.status(404).json({ message: "Administration non trouvé" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
 
 
 
