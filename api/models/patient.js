@@ -20,10 +20,10 @@ class Patient {
         return result.rows[0]
     }
 
-    static async createPatient({sexe, date_de_naissance}) {
+    static async createPatient({sexe, date_de_naissance, id_utilisateur}) {
         const result = await pool.query(
-            'INSERT INTO patient (sexe, date_de_naissance) VALUES ($1, $2) RETURNING *',
-            [sexe, date_de_naissance]
+            'INSERT INTO patient (sexe, date_de_naissance, id_utilisateur) VALUES ($1, $2, $3) RETURNING *',
+            [sexe, date_de_naissance, id_utilisateur]
         )
         return result.rows[0]
     }
@@ -31,7 +31,7 @@ class Patient {
     static async updatePatient(id_patient, {sexe, date_de_naissance}) {
         const result = await pool.query(
             'UPDATE patient SET sexe = $1, date_de_naissance = $2 WHERE id_patient = $3 RETURNING *',
-            [sexe, date_de_naissance]
+            [sexe, date_de_naissance, id_patient]
         );
     }
 }
