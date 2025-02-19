@@ -1,5 +1,6 @@
 const express = require('express');
 const Utilisateur = require('./models/utilisateur');
+const Patient = require('./models/patient')
 require('dotenv').config();
 
 const app = express();
@@ -21,7 +22,7 @@ app.get('/utilisateur', async (req, res) => {
 app.get('/utilisateur/:id_utilisateur', async (req, res) => {
     try {
         const utilisateur = await Utilisateur.getUserById(req.params.id_utilisateur);
-        utilisateur ? res.status(200).json(utilisateur) : res.status(404).json({ message: "utilisateur non trouvé" });
+        utilisateur ? res.status(200).json(utilisateur) : res.status(404).json({ message: "Utilisateur non trouvé" });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -70,6 +71,49 @@ app.delete('/utilisateur/:id_utilisateur', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
+
+
+// Endpoints patient
+
+app.post('/patient', async (req, res) => {
+    try {
+        const newpatient = await Patient.createPatient(req.body);
+        res.status(201).json({ newpatient });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.put('/patient/:id_patient', async (req, res) => {
+    try {
+        const updatepatient = await Patient.updatePatient(req.params.id_patient, req.body);
+        res.status(200).json({ updatepatient });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/patient', async (req, res) => {
+    try {
+        const patient = await Patient.getAllUser();
+        res.status(200).json(patient);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/patient/:id_patient', async (req, res) => {
+    try {
+        const patient = await Patient.getPatientById(req.params.id_patient);
+        patient ? res.status(200).json(patient) : res.status(404).json({ message: "Patient non trouvé" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
