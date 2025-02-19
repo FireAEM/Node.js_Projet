@@ -3,7 +3,7 @@ CREATE TABLE utilisateur(
    nom VARCHAR(255) NOT NULL,
    prenom VARCHAR(255) NOT NULL,
    email VARCHAR(255) NOT NULL UNIQUE,
-   mot_de_passe TEXT
+   mot_de_passe VARCHAR(1000) NOT NULL
 );
 
 CREATE TABLE patient(
