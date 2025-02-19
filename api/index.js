@@ -5,6 +5,8 @@ const Administration = require('./models/administration');
 const Specialite = require('./models/specialite');
 const Type_etablissement = require('./models/type_etablissement');
 const Type_synthese_medicale = require('./models/type_synthese_medicale');
+const Mode_de_paiement = require('./models/mode_de_paiement');
+
 const Assurance_sante = require('./models/assurance_sante');
 require('dotenv').config();
 
@@ -240,6 +242,54 @@ app.get('/type_synthese_medicale/:id_type_synthese_medicale', async (req, res) =
         res.status(500).json({ error: error.message });
     }
 });
+
+// Endpoint mode de paiement
+
+app.post('/mode_de_paiement', async (req, res) => {
+    try {
+        const newMode_de_paiement = await Mode_de_paiement.createPaiement(req.body);
+        res.status(201).json({ newMode_de_paiement });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/mode_de_paiement', async (req, res) => {
+    try {
+        const mode_de_paiement = await Mode_de_paiement.getAllPaiement();
+        res.status(200).json(mode_de_paiement);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/mode_de_paiement/:id_mode_de_paiement', async (req, res) => {
+    try {
+        const mode_de_paiement = await Mode_de_paiement.getPaiementById(req.params.id_mode_de_paiement);
+        mode_de_paiement ? res.status(200).json(mode_de_paiement) : res.status(404).json({ message: "mode de paiement non trouvé" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.delete('/mode_de_paiement/:id_mode_de_paiement', async (req, res) => {
+    try {
+        await Mode_de_paiement.deletePaiement(req.params.id_mode_de_paiement);
+        res.status(204).send();
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.put('/mode_de_paiement/:id_mode_de_paiement', async (req, res) => {
+    try {
+        const updatepaiement = await Mode_de_paiement.updatePaiement(req.params.id_mode_de_paiement, req.body);
+        res.status(200).json({ updatepaiement });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 
 
 
