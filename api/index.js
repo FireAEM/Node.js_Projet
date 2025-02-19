@@ -1,7 +1,8 @@
 const express = require('express');
 const Utilisateur = require('./models/utilisateur');
-const Patient = require('./models/patient')
-const Administration = require('./models/administration')
+const Patient = require('./models/patient');
+const Administration = require('./models/administration');
+const Specialite = require('./models/specialite');
 require('dotenv').config();
 
 const app = express();
@@ -139,6 +140,37 @@ app.get('/administration/:id_administration', async (req, res) => {
     try {
         const administration = await Administration.getAdminById(req.params.id_administration);
         administration ? res.status(200).json(administration) : res.status(404).json({ message: "Administration non trouvé" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
+
+// Endpoints specialite
+
+app.post('/specialite', async (req, res) => {
+    try {
+        const newSpecialite = await Specialite.createSpecialite(req.body);
+        res.status(201).json({ newSpecialite });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/specialite', async (req, res) => {
+    try {
+        const specialite = await Specialite.getAllSpecialite();
+        res.status(200).json(specialite);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/specialite/:id_specialite', async (req, res) => {
+    try {
+        const specialite = await Specialite.getSpecialiteById(req.params.id_specialite);
+        specialite ? res.status(200).json(specialite) : res.status(404).json({ message: "Specialite non trouvé" });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
