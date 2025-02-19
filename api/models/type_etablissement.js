@@ -27,6 +27,21 @@ class Type_etablissement {
         )
         return result.rows[0]
     }
+
+    static async updateTypeEtablissement(id_type_etablissement, { nom }) {
+        const result = await pool.query(
+            'UPDATE type_etablissement SET nom = $1 WHERE id_type_etablissement = $2 RETURNING *',
+            [nom, id_type_etablissement]
+        );
+        return result.rows[0];
+    }
+
+    static async deleteTypeEtablissement(id_type_etablissement) {
+        await pool.query(
+            'DELETE FROM type_etablissement WHERE id_type_etablissement = $1',
+            [id_type_etablissement]
+        );
+    }
 }
 
 module.exports = Type_etablissement;
