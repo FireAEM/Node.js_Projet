@@ -22,7 +22,7 @@ class Administration {
 
     static async createAdmin({id_utilisateur}) {
         const result = await pool.query(
-            'INSERT INTO patient (id_utilisateur) VALUES ($1) RETURNING *',
+            'INSERT INTO administration (id_utilisateur) VALUES ($1) RETURNING *',
             [id_utilisateur]
         )
         return result.rows[0]
