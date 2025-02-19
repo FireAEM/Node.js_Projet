@@ -232,8 +232,8 @@ app.get('/type_etablissement/:id_type_etablissement', async (req, res) => {
 
 app.put('/type_etablissement/:id_type_etablissement', async (req, res) => {
     try {
-        const updatedTypeEtablissement = await TypeEtablissement.updateTypeEtablissement(req.params.id_type_etablissement, req.body);
-        res.status(200).json({ updatedTypeEtablissement });
+        const updatedType_etablissement = await Type_etablissement.updateType_etablissement(req.params.id_type_etablissement, req.body);
+        res.status(200).json({ updatedType_etablissement });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -241,7 +241,7 @@ app.put('/type_etablissement/:id_type_etablissement', async (req, res) => {
 
 app.delete('/type_etablissement/:id_type_etablissement', async (req, res) => {
     try {
-        await TypeEtablissement.deleteTypeEtablissement(req.params.id_type_etablissement);
+        await Type_etablissement.deleteType_etablissement(req.params.id_type_etablissement);
         res.status(204).send();
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -274,6 +274,24 @@ app.get('/type_synthese_medicale/:id_type_synthese_medicale', async (req, res) =
     try {
         const type_synthese_medicale = await Type_synthese_medicale.getType_synthese_medicaleById(req.params.id_type_synthese_medicale);
         type_synthese_medicale ? res.status(200).json(type_synthese_medicale) : res.status(404).json({ message: "Type_synthese_medicale non trouvé" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.put('/type_synthese_medicale/:id_type_synthese_medicale', async (req, res) => {
+    try {
+        const updatedType_synthese_medicale = await Type_synthese_medicale.updateType_synthese_medicale(req.params.id_type_synthese_medicale, req.body);
+        res.status(200).json({ updatedType_synthese_medicale });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.delete('/type_synthese_medicale/:id_type_synthese_medicale', async (req, res) => {
+    try {
+        await Type_synthese_medicale.deleteType_synthese_medicale(req.params.id_type_synthese_medicale);
+        res.status(204).send();
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

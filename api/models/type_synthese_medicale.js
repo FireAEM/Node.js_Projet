@@ -27,6 +27,21 @@ class Type_synthese_medicale {
         )
         return result.rows[0]
     }
+
+    static async updateType_synthese_medicale(id_type_synthese_medicale, { nom }) {
+        const result = await pool.query(
+            'UPDATE type_synthese_medicale SET nom = $1 WHERE id_type_synthese_medicale = $2 RETURNING *',
+            [nom, id_type_synthese_medicale]
+        );
+        return result.rows[0];
+    }
+
+    static async deleteType_synthese_medicale(id_type_synthese_medicale) {
+        await pool.query(
+            'DELETE FROM type_synthese_medicale WHERE id_type_synthese_medicale = $1',
+            [id_type_synthese_medicale]
+        );
+    }
 }
 
 module.exports = Type_synthese_medicale;
