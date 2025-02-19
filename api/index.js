@@ -29,10 +29,10 @@ app.get('/utilisateur/:id_utilisateur', async (req, res) => {
 
 app.post('/utilisateur/connexion', async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { email, mot_de_passe } = req.body;
         const utilisateur = await Utilisateur.getUserByEmail(email);
 
-        if (utilisateur && use.password === password) {
+        if (utilisateur && utilisateur.mot_de_passe === mot_de_passe) {
             res.status(200).json({ message: "Connexion réussie", utilisateur });
         } else {
             res.status(401).json({ message: "Email ou mot de passe incorrect" });
@@ -41,6 +41,8 @@ app.post('/utilisateur/connexion', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
+// Ajouter /utilisateur/deconnexion
 
 app.post('/utilisateur', async (req, res) => {
     try {
