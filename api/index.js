@@ -205,8 +205,8 @@ app.delete('/specialite/:id_specialite', async (req, res) => {
 
 app.post('/type_etablissement', async (req, res) => {
     try {
-        const newtype_etablissement = await Type_etablissement.createType_etablissement(req.body);
-        res.status(201).json({ newtype_etablissement });
+        const newType_etablissement = await Type_etablissement.createType_etablissement(req.body);
+        res.status(201).json({ newType_etablissement });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
