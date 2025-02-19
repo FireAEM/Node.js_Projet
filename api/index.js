@@ -181,6 +181,24 @@ app.get('/specialite/:id_specialite', async (req, res) => {
     }
 });
 
+app.put('/specialite/:id_specialite', async (req, res) => {
+    try {
+        const updatedSpecialite = await Specialite.updateSpecialite(req.params.id_specialite, req.body);
+        res.status(200).json({ updatedSpecialite });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.delete('/specialite/:id_specialite', async (req, res) => {
+    try {
+        await Specialite.deleteSpecialite(req.params.id_specialite);
+        res.status(204).send();
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 
 
 //EndPoint type_etablissement
@@ -243,6 +261,8 @@ app.get('/type_synthese_medicale/:id_type_synthese_medicale', async (req, res) =
     }
 });
 
+
+
 // Endpoint mode de paiement
 
 app.post('/mode_de_paiement', async (req, res) => {
@@ -289,7 +309,6 @@ app.put('/mode_de_paiement/:id_mode_de_paiement', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
-
 
 
 

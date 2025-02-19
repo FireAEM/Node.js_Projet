@@ -27,6 +27,21 @@ class Specialite {
         )
         return result.rows[0]
     }
+
+    static async updateSpecialite(id_specialite, { nom }) {
+        const result = await pool.query(
+            'UPDATE specialite SET nom = $1 WHERE id_specialite = $2 RETURNING *',
+            [nom, id_specialite]
+        );
+        return result.rows[0];
+    }
+
+    static async deleteSpecialite(id_specialite) {
+        await pool.query(
+            'DELETE FROM specialite WHERE id_specialite = $1',
+            [id_specialite]
+        );
+    }
 }
 
 module.exports = Specialite;
