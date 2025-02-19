@@ -3,6 +3,7 @@ const Utilisateur = require('./models/utilisateur');
 const Patient = require('./models/patient');
 const Administration = require('./models/administration');
 const Specialite = require('./models/specialite');
+const Type_etablissement = require('./models/type_etablissement');
 const Type_synthese_medicale = require('./models/type_synthese_medicale');
 require('dotenv').config();
 
@@ -172,37 +173,6 @@ app.get('/specialite/:id_specialite', async (req, res) => {
     try {
         const specialite = await Specialite.getSpecialiteById(req.params.id_specialite);
         specialite ? res.status(200).json(specialite) : res.status(404).json({ message: "Specialite non trouvé" });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
-
-
-
-// Endpoints type_synthese_medicale
-
-app.post('/type_synthese_medicale', async (req, res) => {
-    try {
-        const newType_synthese_medicale = await Type_synthese_medicale.createType_synthese_medicale(req.body);
-        res.status(201).json({ newType_synthese_medicale });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
-
-app.get('/type_synthese_medicale', async (req, res) => {
-    try {
-        const type_synthese_medicale = await Type_synthese_medicale.getAllType_synthese_medicale();
-        res.status(200).json(type_synthese_medicale);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
-
-app.get('/type_synthese_medicale/:id_type_synthese_medicale', async (req, res) => {
-    try {
-        const type_synthese_medicale = await Type_synthese_medicale.getType_synthese_medicaleById(req.params.id_type_synthese_medicale);
-        type_synthese_medicale ? res.status(200).json(type_synthese_medicale) : res.status(404).json({ message: "Type_synthese_medicale non trouvé" });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
