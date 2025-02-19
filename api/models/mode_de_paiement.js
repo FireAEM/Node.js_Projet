@@ -34,6 +34,13 @@ class Mode_de_paiement {
             [id_mode_de_paiement]
         );
     }
+
+    static async updatePaiement(id_mode_de_paiement, {nom}) {
+        const result = await pool.query(
+            'UPDATE mode_de_paiement SET nom = $1 WHERE id_mode_de_paiement = $2 RETURNING *',
+            [nom,id_mode_de_paiement]
+        );
+    }
 }
 
 module.exports = Mode_de_paiement;

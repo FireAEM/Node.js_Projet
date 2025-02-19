@@ -280,6 +280,15 @@ app.delete('/mode_de_paiement/:id_mode_de_paiement', async (req, res) => {
     }
 });
 
+app.put('/mode_de_paiement/:id_mode_de_paiement', async (req, res) => {
+    try {
+        const updatepaiement = await Mode_de_paiement.updatePaiement(req.params.id_mode_de_paiement, req.body);
+        res.status(200).json({ updatepaiement });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 
 
 
