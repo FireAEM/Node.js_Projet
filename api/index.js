@@ -11,6 +11,7 @@ const Soignant = require('./models/soignant');
 const Dossier_medical = require('./models/dossier_medical');
 const Rendez_vous = require('./models/rendez-vous');
 const Facturation = require('./models/facturation');
+const Historique_medicale = require('./models/historique_medical');
 
 const Assurance_sante = require('./models/assurance_sante');
 require('dotenv').config();
@@ -666,6 +667,64 @@ app.put('/facturation/:id_facturation', async (req, res) => {
 app.delete('/facturation/:id_facturation', async (req, res) => {
     try {
         await Facturation.deleteFacturation(req.params.id_facturation);
+        res.status(204).send();
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
+
+//Endpoint historique_medicale
+
+app.post('/historique_medicale', async (req, res) => {
+    try {
+        const newHistorique_medicale = await Historique_medicale.createHistorique_medicale(req.body);
+        res.status(201).json({ newHistorique_medicale });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/historique_medicale', async (req, res) => {
+    try {
+        const historique_medicale = await Historique_medicale.getAllHistorique_medicale();
+        res.status(200).json(historique_medicale);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/historique_medicale/:id_historique_medicale', async (req, res) => {
+    try {
+        const historique_medicale = await Historique_medicale.getHistorique_medicaleById(req.params.id_historique_medicale);
+        historique_medicale ? res.status(200).json(historique_medicale) : res.status(404).json({ message: "Historique médicale non trouvé" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/historique_medicale/dossier_medical/:id_dossier_medical', async (req, res) => {
+    try {
+        const historique_medicale = await Historique_medicale.getHistorique_medicaleByIdDossier_medical(req.params.id_dossier_medical);
+        historique_medicale ? res.status(200).json(historique_medicale) : res.status(404).json({ message: "Historique médicale du dossier médical non trouvé" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.put('/historique_medicale/:id_historique_medicale', async (req, res) => {
+    try {
+        const updatedHistorique_medicale = await Historique_medicale.updateHistorique_medicale(req.params.id_historique_medicale, req.body);
+        res.status(200).json({ updatedHistorique_medicale });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.delete('/historique_medicale/:id_historique_medicale', async (req, res) => {
+    try {
+        await Historique_medicale.deleteHistorique_medicale(req.params.id_historique_medicale);
         res.status(204).send();
     } catch (error) {
         res.status(500).json({ error: error.message });
