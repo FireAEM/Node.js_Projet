@@ -12,6 +12,7 @@ const Dossier_medical = require('./models/dossier_medical');
 const Rendez_vous = require('./models/rendez-vous');
 const Facturation = require('./models/facturation');
 const Historique_medicale = require('./models/historique_medical');
+const Synthese_medicale = require('./models/synthese_medicale');
 
 const Assurance_sante = require('./models/assurance_sante');
 require('dotenv').config();
@@ -725,6 +726,73 @@ app.put('/historique_medicale/:id_historique_medicale', async (req, res) => {
 app.delete('/historique_medicale/:id_historique_medicale', async (req, res) => {
     try {
         await Historique_medicale.deleteHistorique_medicale(req.params.id_historique_medicale);
+        res.status(204).send();
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
+
+//Endpoint synthese_medicale
+
+app.post('/synthese_medicale', async (req, res) => {
+    try {
+        const newSynthese_medicale = await Synthese_medicale.createSynthese_medicale(req.body);
+        res.status(201).json({ newSynthese_medicale });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/synthese_medicale', async (req, res) => {
+    try {
+        const synthese_medicale = await Synthese_medicale.getAllSynthese_medicale();
+        res.status(200).json(synthese_medicale);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/synthese_medicale/:id_synthese_medicale', async (req, res) => {
+    try {
+        const synthese_medicale = await Synthese_medicale.getSynthese_medicaleById(req.params.id_synthese_medicale);
+        synthese_medicale ? res.status(200).json(synthese_medicale) : res.status(404).json({ message: "Synthese médicale non trouvé" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/synthese_medicale/dossier_medical/:id_dossier_medical', async (req, res) => {
+    try {
+        const synthese_medicale = await Synthese_medicale.getSynthese_medicaleByIdDossier_medical(req.params.id_dossier_medical);
+        synthese_medicale ? res.status(200).json(synthese_medicale) : res.status(404).json({ message: "Synthese médicale du dossier médical non trouvé" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/synthese_medicale/type_synthese_medicale/:id_type_synthese_medicale', async (req, res) => {
+    try {
+        const synthese_medicale = await Synthese_medicale.getSynthese_medicaleByIdType_synthese_medicale(req.params.id_type_synthese_medicale);
+        synthese_medicale ? res.status(200).json(synthese_medicale) : res.status(404).json({ message: "Synthese médicale du type synthèse médicale non trouvé" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.put('/synthese_medicale/:id_synthese_medicale', async (req, res) => {
+    try {
+        const updatedSynthese_medicale = await Synthese_medicale.updateSynthese_medicale(req.params.id_synthese_medicale, req.body);
+        res.status(200).json({ updatedSynthese_medicale });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.delete('/synthese_medicale/:id_synthese_medicale', async (req, res) => {
+    try {
+        await Synthese_medicale.deleteSynthese_medicale(req.params.id_synthese_medicale);
         res.status(204).send();
     } catch (error) {
         res.status(500).json({ error: error.message });
