@@ -509,6 +509,24 @@ app.get('/soignant/utilisateur/:id_utilisateur', async (req, res) => {
     }
 });
 
+app.get('/soignant/specialite/id/:id_specialite', async (req, res) => {
+    try {
+        const soignants = await Soignant.getSoignantsBySpecialiteId(req.params.id_specialite);
+        soignants.length ? res.status(200).json(soignants) : res.status(404).json({ message: "Aucun soignant trouvé pour cette spécialité" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/soignant/specialite/nom/:nom_specialite', async (req, res) => {
+    try {
+        const soignants = await Soignant.getSoignantsBySpecialiteName(req.params.nom_specialite);
+        soignants.length ? res.status(200).json(soignants) : res.status(404).json({ message: "Aucun soignant trouvé pour cette spécialité" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 app.put('/soignant/:id_soignant', async (req, res) => {
     try {
         const updatedSoignant = await Soignant.updateSoignant(req.params.id_soignant, req.body);
@@ -517,7 +535,6 @@ app.put('/soignant/:id_soignant', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
-
 
 
 
