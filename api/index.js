@@ -7,7 +7,8 @@ const Type_etablissement = require('./models/type_etablissement');
 const Type_synthese_medicale = require('./models/type_synthese_medicale');
 const Mode_de_paiement = require('./models/mode_de_paiement');
 const Etablissement = require('./models/etablissement');
-const Soignant = require('./models/soignant')
+const Soignant = require('./models/soignant');
+const Dossier_medical = require('./models/dossier_medical');
 
 const Assurance_sante = require('./models/assurance_sante');
 require('dotenv').config();
@@ -489,6 +490,55 @@ app.put('/soignant/:id_soignant', async (req, res) => {
 app.delete('/soignant/:id_soignant', async (req, res) => {
     try {
         await Soignant.deleteSoignant(req.params.id_soignant);
+        res.status(204).send();
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
+
+//Endpoint dossier_medical
+
+app.post('/dossier_medical', async (req, res) => {
+    try {
+        const newDossier_medical = await Dossier_medical.createDossier_medical(req.body);
+        res.status(201).json({ newDossier_medical });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/dossier_medical', async (req, res) => {
+    try {
+        const dossier_medical = await Dossier_medical.getAllDossier_medical();
+        res.status(200).json(dossier_medical);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/dossier_medical/:id_dossier_medical', async (req, res) => {
+    try {
+        const dossier_medical = await Dossier_medical.getDossier_medicalById(req.params.id_dossier_medical);
+        dossier_medical ? res.status(200).json(dossier_medical) : res.status(404).json({ message: "Dossier médical non trouvé" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.put('/dossier_medical/:id_dossier_medical', async (req, res) => {
+    try {
+        const updatedDossier_medical = await Dossier_medical.updateDossier_medical(req.params.id_dossier_medical, req.body);
+        res.status(200).json({ updatedDossier_medical });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.delete('/dossier_medical/:id_dossier_medical', async (req, res) => {
+    try {
+        await Dossier_medical.deleteDossier_medical(req.params.id_dossier_medical);
         res.status(204).send();
     } catch (error) {
         res.status(500).json({ error: error.message });
