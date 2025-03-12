@@ -6,6 +6,7 @@ const Specialite = require('./models/specialite');
 const Type_etablissement = require('./models/type_etablissement');
 const Type_synthese_medicale = require('./models/type_synthese_medicale');
 const Mode_de_paiement = require('./models/mode_de_paiement');
+const Etablissement = require('./models/etablissement');
 
 const Assurance_sante = require('./models/assurance_sante');
 require('dotenv').config();
@@ -389,6 +390,55 @@ app.put('/assurance_sante/:id_assurance_sante', async (req, res) => {
 app.delete('/assurance_sante/:id_assurance_sante', async (req, res) => {
     try {
         await Assurance_sante.deleteAssurance_sante(req.params.id_assurance_sante);
+        res.status(204).send();
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
+
+//Endpoint etablissement
+
+app.post('/etablissement', async (req, res) => {
+    try {
+        const newEtablissement = await Etablissement.createEtablissement(req.body);
+        res.status(201).json({ newEtablissement });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/etablissement', async (req, res) => {
+    try {
+        const etablissement = await Etablissement.getAllEtablissement();
+        res.status(200).json(etablissement);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/etablissement/:id_etablissement', async (req, res) => {
+    try {
+        const etablissement = await Etablissement.getEtablissementById(req.params.id_etablissement);
+        etablissement ? res.status(200).json(etablissement) : res.status(404).json({ message: "Etablissement non trouvé" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.put('/etablissement/:id_etablissement', async (req, res) => {
+    try {
+        const updatedEtablissement = await Etablissement.updateEtablissement(req.params.id_etablissement, req.body);
+        res.status(200).json({ updatedEtablissement });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.delete('/etablissement/:id_etablissement', async (req, res) => {
+    try {
+        await Etablissement.deleteEtablissement(req.params.id_etablissement);
         res.status(204).send();
     } catch (error) {
         res.status(500).json({ error: error.message });
