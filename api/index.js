@@ -7,6 +7,7 @@ const Type_etablissement = require('./models/type_etablissement');
 const Type_synthese_medicale = require('./models/type_synthese_medicale');
 const Mode_de_paiement = require('./models/mode_de_paiement');
 const Etablissement = require('./models/etablissement');
+const Soignant = require('./models/soignant')
 
 const Assurance_sante = require('./models/assurance_sante');
 require('dotenv').config();
@@ -439,6 +440,55 @@ app.put('/etablissement/:id_etablissement', async (req, res) => {
 app.delete('/etablissement/:id_etablissement', async (req, res) => {
     try {
         await Etablissement.deleteEtablissement(req.params.id_etablissement);
+        res.status(204).send();
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
+
+//Endpoint soignant
+
+app.post('/soignant', async (req, res) => {
+    try {
+        const newSoignant = await Soignant.createSoignant(req.body);
+        res.status(201).json({ newSoignant });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/soignant', async (req, res) => {
+    try {
+        const soignant = await Soignant.getAllSoignant();
+        res.status(200).json(soignant);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/soignant/:id_soignant', async (req, res) => {
+    try {
+        const soignant = await Soignant.getSoignantById(req.params.id_soignant);
+        soignant ? res.status(200).json(soignant) : res.status(404).json({ message: "Soignant non trouvé" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.put('/soignant/:id_soignant', async (req, res) => {
+    try {
+        const updatedSoignant = await Soignant.updateSoignant(req.params.id_soignant, req.body);
+        res.status(200).json({ updatedSoignant });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.delete('/soignant/:id_soignant', async (req, res) => {
+    try {
+        await Soignant.deleteSoignant(req.params.id_soignant);
         res.status(204).send();
     } catch (error) {
         res.status(500).json({ error: error.message });
