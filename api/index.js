@@ -10,6 +10,7 @@ const Etablissement = require('./models/etablissement');
 const Soignant = require('./models/soignant');
 const Dossier_medical = require('./models/dossier_medical');
 const Rendez_vous = require('./models/rendez-vous');
+const Facturation = require('./models/facturation');
 
 const Assurance_sante = require('./models/assurance_sante');
 require('dotenv').config();
@@ -607,6 +608,64 @@ app.put('/rendez_vous/:id_rendez_vous', async (req, res) => {
 app.delete('/rendez_vous/:id_rendez_vous', async (req, res) => {
     try {
         await Rendez_vous.deleteRendez_vous(req.params.id_rendez_vous);
+        res.status(204).send();
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
+
+//Endpoint facturation
+
+app.post('/facturation', async (req, res) => {
+    try {
+        const newFacturation = await Facturation.createFacturation(req.body);
+        res.status(201).json({ newFacturation });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/facturation', async (req, res) => {
+    try {
+        const facturation = await Facturation.getAllFacturation();
+        res.status(200).json(facturation);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/facturation/:id_facturation', async (req, res) => {
+    try {
+        const facturation = await Facturation.getFacturationById(req.params.id_facturation);
+        facturation ? res.status(200).json(facturation) : res.status(404).json({ message: "Facturation non trouvé" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/facturation/rendez_vous/:id_rendez_vous', async (req, res) => {
+    try {
+        const facturation = await Facturation.getFacturationByIdRendez_vous(req.params.id_rendez_vous);
+        facturation ? res.status(200).json(facturation) : res.status(404).json({ message: "Facturation du rendez-vous non trouvé" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.put('/facturation/:id_facturation', async (req, res) => {
+    try {
+        const updatedFacturation = await Facturation.updateFacturation(req.params.id_facturation, req.body);
+        res.status(200).json({ updatedFacturation });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.delete('/facturation/:id_facturation', async (req, res) => {
+    try {
+        await Facturation.deleteFacturation(req.params.id_facturation);
         res.status(204).send();
     } catch (error) {
         res.status(500).json({ error: error.message });
