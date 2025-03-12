@@ -20,6 +20,11 @@ class Soignant {
         return result.rows[0]
     }
 
+    static async getSoignantByIdUtilisateur(id_utilisateur) {
+        const result = await pool.query('SELECT * FROM soignant WHERE id_utilisateur = $1', [id_utilisateur]);
+        return result.rows[0]
+    }
+
     static async createSoignant({ rpps, id_etablissement, id_utilisateur }) {
         const result = await pool.query(
             'INSERT INTO soignant (rpps, id_etablissement, id_utilisateur) VALUES ($1, $2, $3) RETURNING *',
@@ -36,12 +41,7 @@ class Soignant {
         return result.rows[0];
     }
 
-    static async deleteSoignant(id_soignant,) {
-        await pool.query(
-            'DELETE FROM soignant WHERE id_soignant = $1',
-            [id_soignant]
-        );
-    }
+    
 }
 
 module.exports = Soignant;

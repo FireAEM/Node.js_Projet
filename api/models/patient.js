@@ -20,6 +20,11 @@ class Patient {
         return result.rows[0]
     }
 
+    static async getPatientByIdUtilisateur(id_utilisateur) {
+        const result = await pool.query('SELECT * FROM patient WHERE id_utilisateur = $1', [id_utilisateur]);
+        return result.rows[0]
+    }
+
     static async createPatient({sexe, date_de_naissance, id_utilisateur}) {
         const result = await pool.query(
             'INSERT INTO patient (sexe, date_de_naissance, id_utilisateur) VALUES ($1, $2, $3) RETURNING *',

@@ -20,6 +20,11 @@ class Administration {
         return result.rows[0]
     }
 
+    static async getAdminByIdUtilisateur(id_utilisateur) {
+        const result = await pool.query('SELECT * FROM administration WHERE id_utilisateur = $1', [id_utilisateur]);
+        return result.rows[0]
+    }
+
     static async createAdmin({id_utilisateur}) {
         const result = await pool.query(
             'INSERT INTO administration (id_utilisateur) VALUES ($1) RETURNING *',

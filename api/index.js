@@ -126,6 +126,15 @@ app.get('/patient/:id_patient', async (req, res) => {
     }
 });
 
+app.get('/patient/utilisateur/:id_utilisateur', async (req, res) => {
+    try {
+        const patient = await Patient.getPatientByIdUtilisateur(req.params.id_utilisateur);
+        patient ? res.status(200).json(patient) : res.status(404).json({ message: "Patient avec cet id utilisateur non trouvé" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 
 
 // Endpoints administration
@@ -152,6 +161,15 @@ app.get('/administration/:id_administration', async (req, res) => {
     try {
         const administration = await Administration.getAdminById(req.params.id_administration);
         administration ? res.status(200).json(administration) : res.status(404).json({ message: "Administration non trouvé" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/administration/utilisateur/:id_utilisateur', async (req, res) => {
+    try {
+        const administration = await Administration.getAdminByIdUtilisateur(req.params.id_utilisateur);
+        administration ? res.status(200).json(administration) : res.status(404).json({ message: "Administration avec cet id utilisateur non trouvé" });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -482,6 +500,15 @@ app.get('/soignant/:id_soignant', async (req, res) => {
     }
 });
 
+app.get('/soignant/utilisateur/:id_utilisateur', async (req, res) => {
+    try {
+        const soignant = await Soignant.getSoignantByIdUtilisateur(req.params.id_utilisateur);
+        soignant ? res.status(200).json(soignant) : res.status(404).json({ message: "Soignant avec cet id utilisateur non trouvé" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 app.put('/soignant/:id_soignant', async (req, res) => {
     try {
         const updatedSoignant = await Soignant.updateSoignant(req.params.id_soignant, req.body);
@@ -491,14 +518,6 @@ app.put('/soignant/:id_soignant', async (req, res) => {
     }
 });
 
-app.delete('/soignant/:id_soignant', async (req, res) => {
-    try {
-        await Soignant.deleteSoignant(req.params.id_soignant);
-        res.status(204).send();
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
 
 
 
@@ -526,6 +545,15 @@ app.get('/dossier_medical/:id_dossier_medical', async (req, res) => {
     try {
         const dossier_medical = await Dossier_medical.getDossier_medicalById(req.params.id_dossier_medical);
         dossier_medical ? res.status(200).json(dossier_medical) : res.status(404).json({ message: "Dossier médical non trouvé" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/dossier_medical/patient/:id_patient', async (req, res) => {
+    try {
+        const dossier_medical = await Dossier_medical.getDossier_medicalByIdPatient(req.params.id_patient);
+        dossier_medical ? res.status(200).json(dossier_medical) : res.status(404).json({ message: "Dossier_medical de ce patient non trouvé" });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

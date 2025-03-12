@@ -20,6 +20,11 @@ class Dossier_medical {
         return result.rows[0]
     }
 
+    static async getDossier_medicalByIdPatient(id_patient) {
+        const result = await pool.query('SELECT * FROM dossier_medical WHERE id_patient = $1', [id_patient]);
+        return result.rows[0]
+    }
+
     static async createDossier_medical({ id_patient }) {
         const result = await pool.query(
             'INSERT INTO dossier_medical (id_patient) VALUES ($1) RETURNING *',
