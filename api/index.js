@@ -9,6 +9,7 @@ const Mode_de_paiement = require('./models/mode_de_paiement');
 const Etablissement = require('./models/etablissement');
 const Soignant = require('./models/soignant');
 const Dossier_medical = require('./models/dossier_medical');
+const Rendez_vous = require('./models/rendez-vous');
 
 const Assurance_sante = require('./models/assurance_sante');
 require('dotenv').config();
@@ -539,6 +540,73 @@ app.put('/dossier_medical/:id_dossier_medical', async (req, res) => {
 app.delete('/dossier_medical/:id_dossier_medical', async (req, res) => {
     try {
         await Dossier_medical.deleteDossier_medical(req.params.id_dossier_medical);
+        res.status(204).send();
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
+
+//Endpoint rendez_vous
+
+app.post('/rendez_vous', async (req, res) => {
+    try {
+        const newRendez_vous = await Rendez_vous.createRendez_vous(req.body);
+        res.status(201).json({ newRendez_vous });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/rendez_vous', async (req, res) => {
+    try {
+        const rendez_vous = await Rendez_vous.getAllRendez_vous();
+        res.status(200).json(rendez_vous);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/rendez_vous/:id_rendez_vous', async (req, res) => {
+    try {
+        const rendez_vous = await Rendez_vous.getRendez_vousById(req.params.id_rendez_vous);
+        rendez_vous ? res.status(200).json(rendez_vous) : res.status(404).json({ message: "Rendez-vous non trouvé" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/rendez_vous/patient/:id_patient', async (req, res) => {
+    try {
+        const rendez_vous = await Rendez_vous.getRendez_vousByIdPatient(req.params.id_patient);
+        rendez_vous ? res.status(200).json(rendez_vous) : res.status(404).json({ message: "Rendez-vous du patient non trouvé" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/rendez_vous/soignant/:id_soignant', async (req, res) => {
+    try {
+        const rendez_vous = await Rendez_vous.getRendez_vousByIdSoignant(req.params.id_soignant);
+        rendez_vous ? res.status(200).json(rendez_vous) : res.status(404).json({ message: "Rendez-vous du soignant non trouvé" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.put('/rendez_vous/:id_rendez_vous', async (req, res) => {
+    try {
+        const updatedRendez_vous = await Rendez_vous.updateRendez_vous(req.params.id_rendez_vous, req.body);
+        res.status(200).json({ updatedRendez_vous });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.delete('/rendez_vous/:id_rendez_vous', async (req, res) => {
+    try {
+        await Rendez_vous.deleteRendez_vous(req.params.id_rendez_vous);
         res.status(204).send();
     } catch (error) {
         res.status(500).json({ error: error.message });

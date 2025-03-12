@@ -36,7 +36,7 @@ class Etablissement {
         return result.rows[0];
     }
 
-    static async deleteEtablissement(id_etablissement, ) {
+    static async deleteEtablissement(id_etablissement) {
         await pool.query(
             'DELETE FROM etablissement WHERE id_etablissement = $1',
             [id_etablissement]
