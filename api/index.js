@@ -1,7 +1,7 @@
 const express = require('express');
 const Utilisateur = require('./models/utilisateur');
 const Patient = require('./models/patient');
-const Administration = require('./models/administration');
+const Role = require('./models/role');
 const Specialite = require('./models/specialite');
 const Type_etablissement = require('./models/type_etablissement');
 const Type_synthese_medicale = require('./models/type_synthese_medicale');
@@ -86,6 +86,19 @@ app.delete('/utilisateur/:id_utilisateur', async (req, res) => {
     }
 });
 
+app.get('/utilisateur/:id_utilisateur/role', async (req, res) => {
+    try {
+        const role = await Utilisateur.getUserRoleById(req.params.id_utilisateur);
+        if (role) {
+            res.status(200).json({ role });
+        } else {
+            res.status(404).json({ message: "Utilisateur non trouvé" });
+        }
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 
 
 // Endpoints patient
@@ -137,39 +150,48 @@ app.get('/patient/utilisateur/:id_utilisateur', async (req, res) => {
 
 
 
-// Endpoints administration
+// Endpoints role
 
-app.post('/administration', async (req, res) => {
+app.post('/role', async (req, res) => {
     try {
-        const newAdministration = await Administration.createAdmin(req.body);
-        res.status(201).json({ newAdministration });
+        const newRole = await Role.createRole(req.body);
+        res.status(201).json({ newRole });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
 
-app.get('/administration', async (req, res) => {
+app.get('/role', async (req, res) => {
     try {
-        const administration = await Administration.getAllAdmin();
-        res.status(200).json(administration);
+        const role = await Role.getAllRole();
+        res.status(200).json(role);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
 
-app.get('/administration/:id_administration', async (req, res) => {
+app.get('/role/:id_role', async (req, res) => {
     try {
-        const administration = await Administration.getAdminById(req.params.id_administration);
-        administration ? res.status(200).json(administration) : res.status(404).json({ message: "Administration non trouvé" });
+        const role = await Role.getRoleById(req.params.id_role);
+        role ? res.status(200).json(role) : res.status(404).json({ message: "Role non trouvé" });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
 
-app.get('/administration/utilisateur/:id_utilisateur', async (req, res) => {
+app.put('/role/:id_role', async (req, res) => {
     try {
-        const administration = await Administration.getAdminByIdUtilisateur(req.params.id_utilisateur);
-        administration ? res.status(200).json(administration) : res.status(404).json({ message: "Administration avec cet id utilisateur non trouvé" });
+        const updatedRole = await Role.updateRole(req.params.id_role, req.body);
+        res.status(200).json({ updatedRole });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.delete('/role/:id_role', async (req, res) => {
+    try {
+        await Role.deleteRole(req.params.id_role);
+        res.status(204).send();
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

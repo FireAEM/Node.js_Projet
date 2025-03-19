@@ -20,18 +20,18 @@ class Etablissement {
         return result.rows[0]
     }
 
-    static async createEtablissement({nom, adresse, horaires, id_type_etablissement}) {
+    static async createEtablissement({ nom, adresse, heure_ouverture, heure_fermeture, jours_ouverture, id_type_etablissement }) {
         const result = await pool.query(
-            'INSERT INTO etablissement (nom, adresse, horaires, id_type_etablissement) VALUES ($1, $2, $3, $4) RETURNING *',
-            [nom, adresse, horaires, id_type_etablissement]
-        )
-        return result.rows[0]
+            'INSERT INTO etablissement (nom, adresse, heure_ouverture, heure_fermeture, jours_ouverture, id_type_etablissement) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+            [nom, adresse, heure_ouverture, heure_fermeture, jours_ouverture, id_type_etablissement]
+        );
+        return result.rows[0];
     }
 
-    static async updateEtablissement(id_etablissement, { nom, adresse, horaires, id_type_etablissement }) {
+    static async updateEtablissement(id_etablissement, { nom, adresse, heure_ouverture, heure_fermeture, jours_ouverture, id_type_etablissement }) {
         const result = await pool.query(
-            'UPDATE etablissement SET nom = $1, adresse = $2, horaires = $3, id_type_etablissement = $4 WHERE id_etablissement = $5 RETURNING *',
-            [nom, adresse, horaires, id_type_etablissement, id_etablissement]
+            'UPDATE etablissement SET nom = $1, adresse = $2, heure_ouverture = $3, heure_fermeture = $4, jours_ouverture = $5, id_type_etablissement = $6 WHERE id_etablissement = $7 RETURNING *',
+            [nom, adresse, heure_ouverture, heure_fermeture, jours_ouverture, id_type_etablissement, id_etablissement]
         );
         return result.rows[0];
     }

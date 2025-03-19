@@ -1,23 +1,16 @@
+CREATE TABLE role(
+   id_role SERIAL PRIMARY KEY,
+   nom VARCHAR(50) NOT NULL UNIQUE
+);
+
 CREATE TABLE utilisateur(
    id_utilisateur SERIAL PRIMARY KEY,
    nom VARCHAR(255) NOT NULL,
    prenom VARCHAR(255) NOT NULL,
    email VARCHAR(255) NOT NULL UNIQUE,
-   mot_de_passe VARCHAR(1000) NOT NULL
-);
-
-CREATE TABLE patient(
-   id_patient SERIAL PRIMARY KEY,
-   sexe VARCHAR(50) NOT NULL,
-   date_de_naissance DATE NOT NULL,
-   id_utilisateur INT NOT NULL UNIQUE,
-   FOREIGN KEY(id_utilisateur) REFERENCES utilisateur(id_utilisateur) ON DELETE CASCADE
-);
-
-CREATE TABLE administration(
-   id_administration SERIAL PRIMARY KEY,
-   id_utilisateur INT NOT NULL UNIQUE,
-   FOREIGN KEY(id_utilisateur) REFERENCES utilisateur(id_utilisateur) ON DELETE CASCADE
+   mot_de_passe VARCHAR(1000) NOT NULL,
+   id_role INT NOT NULL,
+   FOREIGN KEY(id_role) REFERENCES role(id_role) ON DELETE CASCADE
 );
 
 CREATE TABLE specialite(
@@ -49,7 +42,9 @@ CREATE TABLE etablissement(
    id_etablissement SERIAL PRIMARY KEY,
    nom VARCHAR(255) NOT NULL,
    adresse VARCHAR(255) NOT NULL,
-   horaires VARCHAR(255) NOT NULL,
+   heure_ouverture TIME NOT NULL,
+   heure_fermeture TIME NOT NULL,
+   jours_ouverture INTEGER[] NOT NULL,
    id_type_etablissement INT NOT NULL,
    FOREIGN KEY(id_type_etablissement) REFERENCES type_etablissement(id_type_etablissement)
 );
@@ -60,6 +55,14 @@ CREATE TABLE soignant(
    id_etablissement INT NOT NULL,
    id_utilisateur INT NOT NULL UNIQUE,
    FOREIGN KEY(id_etablissement) REFERENCES etablissement(id_etablissement),
+   FOREIGN KEY(id_utilisateur) REFERENCES utilisateur(id_utilisateur) ON DELETE CASCADE
+);
+
+CREATE TABLE patient(
+   id_patient SERIAL PRIMARY KEY,
+   sexe VARCHAR(50) NOT NULL,
+   date_de_naissance DATE NOT NULL,
+   id_utilisateur INT NOT NULL UNIQUE,
    FOREIGN KEY(id_utilisateur) REFERENCES utilisateur(id_utilisateur) ON DELETE CASCADE
 );
 
@@ -111,38 +114,6 @@ CREATE TABLE synthese_medicale(
    FOREIGN KEY(id_soignant) REFERENCES soignant(id_soignant),
    FOREIGN KEY(id_dossier_medical) REFERENCES dossier_medical(id_dossier_medical) ON DELETE CASCADE,
    FOREIGN KEY(id_type_synthese_medicale) REFERENCES type_synthese_medicale(id_type_synthese_medicale)
-);
-
-CREATE TABLE administration_etablissement(
-   id_administration INT,
-   id_etablissement INT,
-   PRIMARY KEY(id_administration, id_etablissement),
-   FOREIGN KEY(id_administration) REFERENCES administration(id_administration) ON DELETE CASCADE,
-   FOREIGN KEY(id_etablissement) REFERENCES etablissement(id_etablissement) ON DELETE CASCADE
-);
-
-CREATE TABLE administration_soignant(
-   id_administration INT,
-   id_soignant INT,
-   PRIMARY KEY(id_administration, id_soignant),
-   FOREIGN KEY(id_administration) REFERENCES administration(id_administration) ON DELETE CASCADE,
-   FOREIGN KEY(id_soignant) REFERENCES soignant(id_soignant) ON DELETE CASCADE
-);
-
-CREATE TABLE administration_patient(
-   id_patient INT,
-   id_administration INT,
-   PRIMARY KEY(id_patient, id_administration),
-   FOREIGN KEY(id_patient) REFERENCES patient(id_patient) ON DELETE CASCADE,
-   FOREIGN KEY(id_administration) REFERENCES administration(id_administration) ON DELETE CASCADE
-);
-
-CREATE TABLE administration_rendez_vous(
-   id_administration INT,
-   id_rendez_vous INT,
-   PRIMARY KEY(id_administration, id_rendez_vous),
-   FOREIGN KEY(id_administration) REFERENCES administration(id_administration) ON DELETE CASCADE,
-   FOREIGN KEY(id_rendez_vous) REFERENCES rendez_vous(id_rendez_vous) ON DELETE CASCADE
 );
 
 CREATE TABLE soignant_specialite(
