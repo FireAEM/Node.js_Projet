@@ -1,0 +1,36 @@
+header {
+    position: sticky;
+    top: 10px;
+    width: 75vw;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: auto;
+    align-items: center;
+    padding: 10px 25px;
+    background-color: var(--header-background);
+    border: 1px solid var(--border-color2);
+    border-radius: 50px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 100;
+    transition: 0.25s;
+}
+
+.headerLogo {
+    width: 50px;
+    height: auto;
+}
+.headerLogo:active {
+    transform: scale(0.95);
+    transition: 0.25s;
+}
+
+
+.headerContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
