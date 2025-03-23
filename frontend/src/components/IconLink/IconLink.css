@@ -1,0 +1,27 @@
+.iconLink {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text-color);
+    gap: 10px;
+}
+
+.iconLink > div {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    background: radial-gradient(circle, var(--main-color1) 0%, var(--main-color2) 100%);
+    border-radius: 50px;
+}
+
+.iconLink > div > img {
+    width: 50%;
+}
+
+.iconLink > p {
+    margin: 0;
+}

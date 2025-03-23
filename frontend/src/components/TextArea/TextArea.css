@@ -1,0 +1,16 @@
+.textArea {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.textArea label {
+    font-weight: 500;
+}
+
+.textArea textarea {
+    border: 1px solid var(--border-color1);
+    border-radius: 10px;
+    padding: 10px;
+    resize: vertical;
+}
