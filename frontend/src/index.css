@@ -12,6 +12,7 @@ html {
   --text-color: black;
   --header-background: rgba(250, 250, 250, 0.75);
   --footer-background: black;
+  --footer-background2: #323232;
   --button-background: black;
   --button-border-radius: 10px;
   --button-text-color: #fff;
@@ -21,6 +22,12 @@ html {
   --accent-color2: #29f598;
   --main-color1: #64C8FF;
   --main-color2: #00AFFF;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: radial-gradient(circle at center, #E1EBFF, #FAFAFA);
 }
 
 
