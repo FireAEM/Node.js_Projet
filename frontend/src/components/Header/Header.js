@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import '../../index.css';
 import './Header.css';
@@ -9,9 +10,9 @@ import LinkButton from '../LinkButton/LinkButton';
 const Header = () => {
     return (
         <header>
-            <a href="">
+            <Link to="/">
                 <img src="/images/logo.png" alt="Square Logo" className="headerLogo" />
-            </a>
+            </Link>
 
             <div className="headerContainer">
                 <LinkButton
