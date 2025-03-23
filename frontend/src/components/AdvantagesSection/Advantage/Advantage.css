@@ -1,0 +1,29 @@
+.advantageItem {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    width: 250px;
+    text-align: center;
+    border-radius: 20px;
+    transition: 0.25s;
+}
+
+.advantageItem div {
+    width: calc(100% - 40px);
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle, var(--main-color1) 0%, var(--main-color2) 100%);
+    border-radius: 50%;
+}
+.advantageItem div img {
+    width: 50%;
+    height: auto;
+    border-radius: 10px;
+    transition: 0.25s;
+}

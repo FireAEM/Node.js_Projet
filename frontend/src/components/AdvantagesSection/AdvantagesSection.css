@@ -1,0 +1,11 @@
+.advantagesContainer h1 {
+    text-align: center;
+}
+
+.advantages {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    flex-wrap: wrap;
+}

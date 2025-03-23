@@ -19,6 +19,8 @@ html {
   --border-color2: rgba(235, 235, 235, 0.75);
   --accent-color1: #009efe;
   --accent-color2: #29f598;
+  --main-color1: #64C8FF;
+  --main-color2: #00AFFF;
 }
 
 /* body {

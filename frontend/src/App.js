@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './components/Header/Header';
 import HeroSection from './components/HeroSection/HeroSection';
+import AdvantageSection from './components/AdvantagesSection/AdvantagesSection';
 
 
 const App = () => {
@@ -8,6 +9,7 @@ const App = () => {
         <div>
             <Header />
             <HeroSection />
+            <AdvantageSection />
             
         </div>
     );

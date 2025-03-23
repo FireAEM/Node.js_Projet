@@ -2,7 +2,6 @@ import React from "react";
 import LinkButton from "../LinkButton/LinkButton";
 
 import './HeroSection.css';
-import '../../index.css';
 
 
 const HeroSection = () => {
@@ -19,7 +18,7 @@ const HeroSection = () => {
                     backgroundColor="black"
                 /> 
             </div>
-            <img src="/images/logo.png" alt="Image hero"/>
+            <div><img src="/images/image_hero.png" alt="Image hero"/></div>
         </div>
     );
 };
