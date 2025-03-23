@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import './ContactSection.css';
 
@@ -8,6 +8,46 @@ import TextArea from "../TextArea/TextArea";
 import Button from "../Button/Button";
 
 const ContactSection = () => {
+    const [formData, setFormData] = useState({
+        nom: "",
+        prenom: "",
+        email: "",
+        message: "",
+    });
+
+    const [successMessage, setSuccessMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault(); // Empêche le rechargement de la page
+
+        try {
+            const response = await fetch("http://localhost:3000/message", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                setSuccessMessage("Votre message a été envoyé avec succès !");
+                setFormData({ nom: "", prenom: "", email: "", message: "" }); // Réinitialise le formulaire
+            } else {
+                const error = await response.json();
+                setErrorMessage(`Une erreur s'est produite : ${error.error}`);
+            }
+        } catch (error) {
+            setErrorMessage("Une erreur réseau s'est produite. Veuillez réessayer plus tard.");
+        }
+    };
+
     return (
         <div className="contactContainer">
             <div className="contactLinks">
@@ -34,31 +74,39 @@ const ContactSection = () => {
                     target="blank"
                 />
             </div>
-            <form className="contactForm">
+            <form className="contactForm" onSubmit={handleSubmit}>
                 <InputField 
                     label="Nom"
                     type="text"
                     name="nom"
-                    required = {true}
+                    value={formData.nom}
+                    onChange={handleChange}
+                    required={true}
                 />
 
                 <InputField 
                     label="Prénom"
                     type="text"
                     name="prenom"
-                    required = {true}
+                    value={formData.prenom}
+                    onChange={handleChange}
+                    required={true}
                 />
 
                 <InputField 
                     label="Email"
                     type="email"
                     name="email"
-                    required = {true}
+                    value={formData.email}
+                    onChange={handleChange}
+                    required={true}
                 />
 
                 <TextArea 
                     label="Message"
                     name="message"
+                    value={formData.message}
+                    onChange={handleChange}
                     required={true}
                 />
 
@@ -67,6 +115,9 @@ const ContactSection = () => {
                     type="submit"
                     className="submitButton"
                 />
+
+                {successMessage && <p className="successMessage">{successMessage}</p>}
+                {errorMessage && <p className="errorMessage">{errorMessage}</p>}
             </form>
         </div>
     );

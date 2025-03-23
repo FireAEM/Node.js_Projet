@@ -77,3 +77,8 @@ INSERT INTO soignant_specialite (id_soignant, id_specialite) VALUES
 (1, 1),
 (2, 2),
 (3, 3);
+
+INSERT INTO message (nom, prenom, email, message) VALUES
+('Durand', 'Sophie', 'sophie.durand@exemple.fr', 'Bonjour, je rencontre un problème pour planifier un rendez-vous.'),
+('Bernard', 'Lucas', 'lucas.bernard@exemple.fr', 'Je ne parviens pas à accéder à mon compte, que dois-je faire ?'),
+('Petit', 'Emma', 'emma.petit@exemple.fr', 'Le médecin a annulé mon rendez-vous, puis-je en réserver un autre rapidement ?');

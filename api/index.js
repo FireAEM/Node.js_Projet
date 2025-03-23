@@ -1,4 +1,6 @@
 const express = require('express');
+const cors = require('cors');
+
 const Utilisateur = require('./models/utilisateur');
 const Patient = require('./models/patient');
 const Role = require('./models/role');
@@ -13,11 +15,20 @@ const Rendez_vous = require('./models/rendez-vous');
 const Facturation = require('./models/facturation');
 const Historique_medicale = require('./models/historique_medical');
 const Synthese_medicale = require('./models/synthese_medicale');
+const Message = require('./models/message');
 
 const Assurance_sante = require('./models/assurance_sante');
+
 require('dotenv').config();
 
 const app = express();
+
+app.use(cors({
+    origin: 'http://localhost:3001',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true,
+}));
+
 app.use(express.json());
 
 
@@ -860,6 +871,55 @@ app.put('/synthese_medicale/:id_synthese_medicale', async (req, res) => {
 app.delete('/synthese_medicale/:id_synthese_medicale', async (req, res) => {
     try {
         await Synthese_medicale.deleteSynthese_medicale(req.params.id_synthese_medicale);
+        res.status(204).send();
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
+
+// Endpoints message
+
+app.post('/message', async (req, res) => {
+    try {
+        const newMessage = await Message.createMessage(req.body);
+        res.status(201).json({ newMessage });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/message', async (req, res) => {
+    try {
+        const messages = await Message.getAllMessage();
+        res.status(200).json(messages);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/message/:id_message', async (req, res) => {
+    try {
+        const message = await Message.getMessageById(req.params.id_message);
+        message ? res.status(200).json(message) : res.status(404).json({ message: "Message non trouvé" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.put('/message/:id_message', async (req, res) => {
+    try {
+        const updatedMessage = await Message.updateMessage(req.params.id_message, req.body);
+        res.status(200).json({ updatedMessage });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.delete('/message/:id_message', async (req, res) => {
+    try {
+        await Message.deleteMessage(req.params.id_message);
         res.status(204).send();
     } catch (error) {
         res.status(500).json({ error: error.message });

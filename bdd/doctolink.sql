@@ -123,3 +123,11 @@ CREATE TABLE soignant_specialite(
    FOREIGN KEY(id_soignant) REFERENCES soignant(id_soignant) ON DELETE CASCADE,
    FOREIGN KEY(id_specialite) REFERENCES specialite(id_specialite) ON DELETE CASCADE
 );
+
+CREATE TABLE message(
+   id_message SERIAL PRIMARY KEY,
+   nom VARCHAR(255) NOT NULL,
+   prenom VARCHAR(255) NOT NULL,
+   email VARCHAR(255) NOT NULL,
+   message TEXT NOT NULL,
+);
