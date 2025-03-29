@@ -1,15 +1,20 @@
-.inputField {
+.selectField {
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
 
-.inputField label {
+.selectField label {
     font-weight: 500;
 }
 
-.inputField input {
+.selectField select {
     border: 1px solid var(--border-color1);
     border-radius: 10px;
     padding: 10px;
+}
+
+.selectField select option {
+    border-radius: 10px;
+    padding: 5px;
 }

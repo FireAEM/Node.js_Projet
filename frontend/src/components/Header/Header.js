@@ -16,13 +16,13 @@ const Header = () => {
 
             <div className="headerContainer">
                 <LinkButton
-                    link=""
+                    link="/register/soignant/"
                     className="headerSoignantAccount"
                     text="🧑‍⚕️ Espace soignant"
                 />
 
                 <LinkButton
-                    link=""
+                    link="/register/patient/"
                     className="headerPatientAccount"
                     text="🧔 Compte"
                     color="white"
