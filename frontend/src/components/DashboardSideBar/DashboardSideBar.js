@@ -10,19 +10,19 @@ const DashboardSideBar = ({ type }) => {
     let navLinks = [];
     if (type === "patient") {
         navLinks = [
-            { link: "/dashboard/patient/soignants", text: "Soignants", image: "/images/soignants.png" },
-            { link: "/dashboard/patient/rendezvous", text: "Rendez-vous", image: "/images/rendezvous.png" },
-            { link: "/dashboard/patient/dossiermedical", text: "Dossier Médical", image: "/images/dossier.png" }
+            { link: "/dashboard/patient/soignants", text: "Soignants", image: "/images/soignant_clair.png" },
+            { link: "/dashboard/patient/rendezvous", text: "Rendez-vous", image: "/images/calendrier_clair.png" },
+            { link: "/dashboard/patient/dossiermedical", text: "Dossier Médical", image: "/images/dossier_clair.png" }
         ];
     } else if (type === "soignant") {
         navLinks = [
-            { link: "/dashboard/soignant/patients", text: "Patients", image: "/images/patients.png" },
-            { link: "/dashboard/soignant/rendezvous", text: "Rendez-vous", image: "/images/rendezvous.png" },
-            { link: "/dashboard/soignant/etablissement", text: "Etablissement", image: "/images/etablissement.png" }
+            { link: "/dashboard/soignant/patients", text: "Patients", image: "/images/utilisateur_clair.png" },
+            { link: "/dashboard/soignant/rendezvous", text: "Rendez-vous", image: "/images/calendrier_clair.png" },
+            { link: "/dashboard/soignant/etablissement", text: "Etablissement", image: "/images/logo_clair.png" }
         ];
     } else if (type === "administration") {
         navLinks = [
-            { link: "/dashboard/admin/messages", text: "Messages", image: "/images/messages.png" }
+            { link: "/dashboard/admin/messages", text: "Messages", image: "/images/email_clair.png" }
         ];
     }
 
