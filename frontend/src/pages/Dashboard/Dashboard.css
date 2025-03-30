@@ -1,0 +1,15 @@
+.dashboard {
+    margin: 0;
+    padding: 0;
+    background-color: #FAFAFF;
+    display: flex;
+    flex-direction: row;
+}
+
+.dashboardContentSection {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    padding: 50px;
+    width: calc(80vw - 100px);
+}

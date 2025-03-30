@@ -1,0 +1,63 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+import './DashboardSideBar.css';
+
+import SideBarLinkButton from './SideBarLinkButton/SideBarLinkButton';
+
+
+const DashboardSideBar = ({ type }) => {
+    let navLinks = [];
+    if (type === "patient") {
+        navLinks = [
+            { link: "/dashboard/patient/soignants", text: "Soignants", image: "/images/soignants.png" },
+            { link: "/dashboard/patient/rendezvous", text: "Rendez-vous", image: "/images/rendezvous.png" },
+            { link: "/dashboard/patient/dossiermedical", text: "Dossier Médical", image: "/images/dossier.png" }
+        ];
+    } else if (type === "soignant") {
+        navLinks = [
+            { link: "/dashboard/soignant/patients", text: "Patients", image: "/images/patients.png" },
+            { link: "/dashboard/soignant/rendezvous", text: "Rendez-vous", image: "/images/rendezvous.png" },
+            { link: "/dashboard/soignant/etablissement", text: "Etablissement", image: "/images/etablissement.png" }
+        ];
+    } else if (type === "administration") {
+        navLinks = [
+            { link: "/dashboard/admin/messages", text: "Messages", image: "/images/messages.png" }
+        ];
+    }
+
+    return (
+        <header className='dashboardSideBar'>
+            <Link to="/" className='dashboardSideBarLogo'>
+                <img src="/images/logo_clair.png" alt="Doctolink Logo"></img>
+                Doctolink
+            </Link>
+            
+            <nav className='dashboardSideBarNav'>
+                {navLinks.map((navItem, index) => (
+                    <SideBarLinkButton
+                        key={index}
+                        link={navItem.link}
+                        text={navItem.text}
+                        image={navItem.image}
+                    />
+                ))}
+            </nav>
+
+            <SideBarLinkButton
+                link="/dashboard/patient/account"
+                className='dashboardSideBarAccount'
+                image="/images/utilisateur_clair.png"
+                border={"1px solid var(--main-color1)"}
+            >
+                <div>
+                    {/* utilisateurConnecte.nom utilisateurConnecte.prenom */}
+                    {/* utilisateurConnecte.email */}
+                    Compte
+                </div>
+            </SideBarLinkButton>
+        </header>
+    );
+};
+
+export default DashboardSideBar;

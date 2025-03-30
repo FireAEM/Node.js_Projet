@@ -6,8 +6,12 @@ import HomePage from './pages/HomePage/HomePage';
 import PatientRegisterPage from './pages/RegisterPage/PatientRegisterPage';
 import SoignantRegisterPage from './pages/SoignantRegisterPage/SoignantRegisterPage';
 import LoginPage from './pages/LoginPage/LoginPage';
+import Dashboard from './pages/Dashboard/Dashboard';
 
 const App = () => {
+    // Par exemple, ici on définit une constante "type"
+    const userType = "patient";
+
     return (
         <Router>
             <Routes>
@@ -15,6 +19,7 @@ const App = () => {
                 <Route path='/register/patient/' element={<PatientRegisterPage />} />
                 <Route path='/register/soignant/' element={<SoignantRegisterPage />} />
                 <Route path='/login/' element={<LoginPage />} />
+                <Route path="/dashboard/*" element={<Dashboard type={userType} />} />
             </Routes>
         </Router>
     );

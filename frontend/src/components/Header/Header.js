@@ -9,7 +9,7 @@ import LinkButton from '../LinkButton/LinkButton';
 
 const Header = () => {
     return (
-        <header>
+        <header className='header'>
             <Link to="/">
                 <img src="/images/logo.png" alt="Square Logo" className="headerLogo" />
             </Link>

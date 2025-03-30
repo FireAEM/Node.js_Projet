@@ -1,0 +1,54 @@
+.dashboardSideBar {
+    position: sticky;
+    top: 0px;
+    width: 20vw;
+    height: calc(100vh - 50px);
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-between;
+    margin: 0;
+    align-items: center;
+    padding: 25px;
+    background-color: rgb(20, 20, 20);
+    border-radius: 0px 25px 25px 0px;
+    z-index: 50;
+    transition: 0.25s;
+}
+
+.dashboardSideBarLogo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    gap: 25px;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 500;
+    color: white;
+}
+.dashboardSideBarLogo img {
+    width: 50px;
+    height: auto;
+}
+.dashboardSideBarLogo img:active {
+    transform: scale(0.95);
+    transition: 0.25s;
+}
+
+.dashboardSideBarNav {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 20px;
+}
+
+.dashboardSideBarAccount {
+    overflow-x: auto;
+}
+.dashboardSideBarAccount::-webkit-scrollbar {
+    display: none;
+}
+
+.dashboardSideBarAccount div p:nth-child(1) {
+    font-weight: 500;
+}
