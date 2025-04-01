@@ -23,7 +23,7 @@ const DashboardContent = ({ type }) => {
         <Routes>
             {type === "patient" && (
                 <>
-                    <Route path="patient/soignants" element={<Soignants />} />
+                    <Route path="patient/soignant" element={<Soignants />} />
                     <Route path="patient/rendezvous" element={<RendezVousPatient />} />
                     <Route path="patient/dossiermedical" element={<DossierMedical />} />
                     <Route path="patient/account" element={<PatientCompte />} />
