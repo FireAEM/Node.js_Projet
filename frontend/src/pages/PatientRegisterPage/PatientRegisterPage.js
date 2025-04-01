@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useContext, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 import './PatientRegisterPage.css';
 
 import Header from '../../components/Header/Header';
 import Form from '../../components/Form/Form';
 import FooterSection from '../../components/FooterSection/FooterSection';
+import { AuthContext } from '../../context/AuthContext';
+
 
 const PatientRegisterPage = () => {
     const [formData, setFormData] = useState({
@@ -20,6 +22,15 @@ const PatientRegisterPage = () => {
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
+    const { login, user } = useContext(AuthContext);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (user) {
+            navigate("/dashboard/patient");
+        }
+    }, [user, navigate]);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -27,52 +38,45 @@ const PatientRegisterPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         try {
             const utilisateurResponse = await fetch("http://localhost:3000/utilisateur", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     nom: formData.nom,
                     prenom: formData.prenom,
                     email: formData.email,
                     mot_de_passe: formData.mot_de_passe,
-                    id_role: 3 // Rôle patient
-                }),
+                    id_role: 3 // Patient
+                })
             });
-
             if (!utilisateurResponse.ok) {
                 const error = await utilisateurResponse.json();
                 throw new Error(`Erreur utilisateur : ${error.message}`);
             }
 
             const newUser = await utilisateurResponse.json();
-
             const patientResponse = await fetch("http://localhost:3000/patient", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     sexe: formData.sexe,
                     date_de_naissance: formData.date_de_naissance,
                     id_utilisateur: newUser.newUser.id_utilisateur
-                }),
+                })
             });
-
             if (!patientResponse.ok) {
                 const error = await patientResponse.json();
                 throw new Error(`Erreur patient : ${error.message}`);
             }
-
-            setSuccessMessage("Inscription réussie ! Votre compte a été créé avec succès.");
-            setFormData({ nom: "", prenom: "", email: "", mot_de_passe: "", sexe: "", date_de_naissance: "" });
+            login(newUser.newUser);
+            setSuccessMessage("Inscription réussie !");
+            navigate("/dashboard/patient");
         } catch (error) {
             setErrorMessage(`Une erreur s'est produite : ${error.message}`);
         }
     };
+    
 
     const formConfig = {
         fields: [
@@ -111,10 +115,14 @@ const PatientRegisterPage = () => {
             {
                 id: "sexe",
                 label: "Sexe",
-                type: "text",
+                component: "select",
                 value: formData.sexe,
                 onChange: handleChange,
-                required: true
+                required: true,
+                options: [
+                    { id: "Masculin", nom: "Masculin" },
+                    { id: "Feminin", nom: "Féminin" }
+                ]
             },
             {
                 id: "date_de_naissance",

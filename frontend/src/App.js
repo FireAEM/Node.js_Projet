@@ -1,27 +1,61 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
 // Importation des pages
 import HomePage from './pages/HomePage/HomePage';
-import PatientRegisterPage from './pages/RegisterPage/PatientRegisterPage';
+import PatientRegisterPage from './pages/PatientRegisterPage/PatientRegisterPage';
 import SoignantRegisterPage from './pages/SoignantRegisterPage/SoignantRegisterPage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import Dashboard from './pages/Dashboard/Dashboard';
+import { AuthProvider, AuthContext } from './context/AuthContext';
 
-const App = () => {
-    // Par exemple, ici on définit une constante "type"
-    const userType = "patient";
+const AppRoutes = () => {
+    const { user } = useContext(AuthContext);
+    let userType = "";
+
+    if (user) {
+        switch (user.id_role) {
+            case 1:
+                userType = "administration";
+                break;
+            case 2:
+                userType = "soignant";
+                break;
+            case 3:
+                userType = "patient";
+                break;
+            default:
+                userType = "patient";
+        }
+    }
 
     return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path='/register/patient/' element={<PatientRegisterPage />} />
-                <Route path='/register/soignant/' element={<SoignantRegisterPage />} />
-                <Route path='/login/' element={<LoginPage />} />
-                <Route path="/dashboard/*" element={<Dashboard type={userType} />} />
-            </Routes>
-        </Router>
+        <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route
+                path="/register/patient"
+                element={user ? <Navigate to={`/dashboard/${userType}`} /> : <PatientRegisterPage />}
+            />
+            <Route
+                path="/register/soignant"
+                element={user ? <Navigate to={`/dashboard/${userType}`} /> : <SoignantRegisterPage />}
+            />
+            <Route path="/login" element={user ? <Navigate to={`/dashboard/${userType}`} /> : <LoginPage />} />
+            <Route
+                path="/dashboard/*"
+                element={user ? <Dashboard type={userType} user={user} /> : <Navigate to="/login" />}
+            />
+        </Routes>
+    );
+};
+  
+const App = () => {
+    return (
+        <AuthProvider>
+            <Router>
+                <AppRoutes />
+            </Router>
+        </AuthProvider>
     );
 };
 

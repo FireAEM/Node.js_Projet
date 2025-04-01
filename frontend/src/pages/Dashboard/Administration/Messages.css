@@ -1,0 +1,44 @@
+.messagesPage {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 25px;
+}
+.messagesPage > h1 {
+    margin: 0;
+}
+
+.dashboardSearch {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    background-color: var(--background-color2);
+    border: 1px solid var(--border-color2);
+    border-radius: 25px;
+    gap: 10px;
+}
+.dashboardSearch input {
+    padding: 10px;
+    border: none;
+    border-radius: 50px;
+    background-color: transparent;
+    color: var(--text-color);
+}
+.dashboardSearch img {
+    width: 20px;
+    height: auto;
+    margin: 5px;
+}
+
+.messages {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.messages > p {
+    margin: 0;
+    border-radius: 10px;
+    font-weight: 300;
+}

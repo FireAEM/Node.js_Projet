@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 import './SoignantRegisterPage.css';
 
 import Header from '../../components/Header/Header';
 import Form from '../../components/Form/Form';
 import FooterSection from '../../components/FooterSection/FooterSection';
+import { AuthContext } from '../../context/AuthContext';
+
 
 const SoignantRegisterPage = () => {
     const [formData, setFormData] = useState({
@@ -24,44 +26,53 @@ const SoignantRegisterPage = () => {
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
+    const { login, user } = useContext(AuthContext);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (user) {
+            navigate("/dashboard/soignant");
+        }
+    }, [user, navigate]);
 
     useEffect(() => {
         const fetchEtablissements = async () => {
-                try {
-                    const res = await fetch("http://localhost:3000/etablissement");
-                    const data = await res.json();
+            try {
+                const res = await fetch("http://localhost:3000/etablissement");
+                const data = await res.json();
 
-                    const etabOptions = data.map(etab => ({
-                        id: etab.id_etablissement,
-                        nom: `${etab.nom} - ${etab.adresse}`
-                    }));
-                    setEtablissements(etabOptions);
-                } catch (error) {
-                    console.error("Erreur chargement établissements :", error);
-                }
-            };
+                const etabOptions = data.map(etab => ({
+                    id: etab.id_etablissement,
+                    nom: `${etab.nom} - ${etab.adresse}`
+                }));
+                setEtablissements(etabOptions);
+            } catch (error) {
+                console.error("Erreur chargement établissements :", error);
+            }
+        };
+    
+        const fetchSpecialites = async () => {
+            try {
+                const res = await fetch("http://localhost:3000/specialite");
+                const data = await res.json();
 
-            const fetchSpecialites = async () => {
-                try {
-                    const res = await fetch("http://localhost:3000/specialite");
-                    const data = await res.json();
-
-                    const specOptions = data.map(spec => ({
+                const specOptions = data.map(spec => ({
                     id: spec.id_specialite,
                     nom: spec.nom
                 }));
                 setSpecialites(specOptions);
-                } catch (error) {
-                    console.error("Erreur chargement spécialités :", error);
-                }
-            };
+            } catch (error) {
+                console.error("Erreur chargement spécialités :", error);
+            }
+        };
+    
         fetchEtablissements();
         fetchSpecialites();
     }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-
+        
         if (name === "ids_specialite") {
             const selectedOptions = Array.from(e.target.selectedOptions, option => option.value);
             setFormData({ ...formData, [name]: selectedOptions });
@@ -75,55 +86,39 @@ const SoignantRegisterPage = () => {
         try {
             const utilisateurResponse = await fetch("http://localhost:3000/utilisateur", {
                 method: "POST",
-                headers: {
-                "Content-Type": "application/json",
-            },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     nom: formData.nom,
                     prenom: formData.prenom,
                     email: formData.email,
                     mot_de_passe: formData.mot_de_passe,
                     id_role: 2
-                }),
+                })
             });
+            if (!utilisateurResponse.ok) {
+                const errorData = await utilisateurResponse.json();
+                throw new Error(`Erreur utilisateur : ${errorData.message}`);
+            }
 
-        if (!utilisateurResponse.ok) {
-            const errorData = await utilisateurResponse.json();
-            throw new Error(`Erreur utilisateur : ${errorData.message}`);
-        }
-
-        const newUser = await utilisateurResponse.json();
-
-        const soignantResponse = await fetch("http://localhost:3000/soignant", {
+            const newUser = await utilisateurResponse.json();
+            const soignantResponse = await fetch("http://localhost:3000/soignant", {
                 method: "POST",
-                headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                rpps: parseInt(formData.rpps),
-                id_etablissement: parseInt(formData.id_etablissement),
-                id_utilisateur: newUser.newUser.id_utilisateur,
-                ids_specialite: formData.ids_specialite.map(id => parseInt(id))
-            }),
-        });
-
-        if (!soignantResponse.ok) {
-            const errorData = await soignantResponse.json();
-            throw new Error(`Erreur soignant : ${errorData.error || errorData.message}`);
-        }
-
-        await soignantResponse.json();
-
-        setSuccessMessage("Inscription réussie ! Votre compte soignant a été créé avec succès.");
-        setFormData({
-            nom: "",
-            prenom: "",
-            email: "",
-            mot_de_passe: "",
-            rpps: "",
-            id_etablissement: "",
-            ids_specialite: []
-        });
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    rpps: parseInt(formData.rpps),
+                    id_etablissement: parseInt(formData.id_etablissement),
+                    id_utilisateur: newUser.newUser.id_utilisateur,
+                    ids_specialite: formData.ids_specialite.map(id => parseInt(id))
+                })
+            });
+            if (!soignantResponse.ok) {
+                const errorData = await soignantResponse.json();
+                throw new Error(`Erreur soignant : ${errorData.error || errorData.message}`);
+            }
+            await soignantResponse.json();
+            login(newUser.newUser);
+            setSuccessMessage("Inscription réussie !");
+            navigate("/dashboard/soignant");
         } catch (error) {
             setErrorMessage(`Une erreur s'est produite : ${error.message}`);
         }

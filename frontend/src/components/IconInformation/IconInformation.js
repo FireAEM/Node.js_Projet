@@ -4,14 +4,14 @@ import './IconInformation.css';
 const IconInformation = ({ 
     image = "/images/logo.png",
     imageAlt = "Image",
-    texts = ["Information"]
+    text = "Information"
 }) => {
     return (
         <div className="iconInformation">
             <div>
                 <img src={image} alt={imageAlt}></img>
             </div>
-            <p>{texts.join(" ")}</p>
+            <p>{text}</p>
         </div>
     );
 };

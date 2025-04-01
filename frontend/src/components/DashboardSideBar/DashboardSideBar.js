@@ -6,7 +6,7 @@ import './DashboardSideBar.css';
 import SideBarLinkButton from './SideBarLinkButton/SideBarLinkButton';
 
 
-const DashboardSideBar = ({ type }) => {
+const DashboardSideBar = ({ type, user }) => {
     let navLinks = [];
     if (type === "patient") {
         navLinks = [
@@ -22,14 +22,16 @@ const DashboardSideBar = ({ type }) => {
         ];
     } else if (type === "administration") {
         navLinks = [
-            { link: "/dashboard/admin/messages", text: "Messages", image: "/images/email_clair.png" }
+            { link: "/dashboard/administration/messages", text: "Messages", image: "/images/email_clair.png" }
         ];
     }
+
+    const accountLink = `/dashboard/${type}/account`;
 
     return (
         <header className='dashboardSideBar'>
             <Link to="/" className='dashboardSideBarLogo'>
-                <img src="/images/logo_clair.png" alt="Doctolink Logo"></img>
+                <img src="/images/logo_clair.png" alt="Doctolink Logo" />
                 Doctolink
             </Link>
             
@@ -45,15 +47,18 @@ const DashboardSideBar = ({ type }) => {
             </nav>
 
             <SideBarLinkButton
-                link="/dashboard/patient/account"
+                link={accountLink}
                 className='dashboardSideBarAccount'
                 image="/images/utilisateur_clair.png"
                 border={"1px solid var(--main-color1)"}
             >
                 <div>
-                    {/* utilisateurConnecte.nom utilisateurConnecte.prenom */}
-                    {/* utilisateurConnecte.email */}
-                    Compte
+                    {user ? (
+                        <>
+                            <p>{user.nom} {user.prenom}</p>
+                            <p>{user.email}</p>
+                        </>
+                    ) : "Compte"}
                 </div>
             </SideBarLinkButton>
         </header>
