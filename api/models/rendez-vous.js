@@ -22,12 +22,12 @@ class Rendez_vous {
 
     static async getRendez_vousByIdPatient(id_patient) {
         const result = await pool.query('SELECT * FROM rendez_vous WHERE id_patient = $1', [id_patient]);
-        return result.rows[0]
+        return result.rows;
     }
 
     static async getRendez_vousByIdSoignant(id_soignant) {
         const result = await pool.query('SELECT * FROM rendez_vous WHERE id_soignant = $1', [id_soignant]);
-        return result.rows[0]
+        return result.rows;
     }
 
     static async createRendez_vous({dateheure, statut, id_soignant, id_patient}) {

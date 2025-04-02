@@ -129,5 +129,5 @@ CREATE TABLE message(
    nom VARCHAR(255) NOT NULL,
    prenom VARCHAR(255) NOT NULL,
    email VARCHAR(255) NOT NULL,
-   message TEXT NOT NULL,
+   message TEXT NOT NULL
 );

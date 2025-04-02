@@ -70,14 +70,8 @@ app.post('/utilisateur/connexion', async (req, res) => {
 
 // Ajouter /utilisateur/deconnexion
 
-const bcrypt = require('bcrypt');
-const saltRounds = 10;
 app.post('/utilisateur', async (req, res) => {
     try {
-        const { mot_de_passe } = req.body;
-        const hashedPassword = await bcrypt.hash(mot_de_passe, saltRounds);
-        req.body.mot_de_passe = hashedPassword;
-
         const newUser = await Utilisateur.createUser(req.body);
         res.status(201).json({ newUser });
     } catch (error) {
