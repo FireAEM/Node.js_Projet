@@ -151,4 +151,4 @@ const Soignants = () => {
     );
 };
 
-export default Soignant;
+export default Soignants;
