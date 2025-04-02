@@ -21,3 +21,7 @@
 .iconInformation > div > img {
     width: 50%;
 }
+
+.iconInformation > p {
+    margin: 0;
+}

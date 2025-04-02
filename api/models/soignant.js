@@ -11,9 +11,15 @@ const pool = new Pool({
 
 class Soignant {
     static async getAllSoignant() {
-        const result = await pool.query('SELECT * FROM soignant');
+        const result = await pool.query(`
+            SELECT soignant.*, 
+                   COALESCE(array_agg(soignant_specialite.id_specialite) FILTER (WHERE soignant_specialite.id_specialite IS NOT NULL), '{}') AS ids_specialite
+            FROM soignant
+            LEFT JOIN soignant_specialite ON soignant.id_soignant = soignant_specialite.id_soignant
+            GROUP BY soignant.id_soignant
+        `);
         return result.rows;
-    }
+    }    
 
     static async getSoignantById(id_soignant) {
         const result = await pool.query('SELECT * FROM soignant WHERE id_soignant = $1', [id_soignant]);

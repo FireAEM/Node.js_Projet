@@ -41,7 +41,7 @@ const RendezVous = () => {
                 const res = await fetch(`http://localhost:3000/rendez_vous/patient/${patientId}`);
                 if (res.ok) {
                     const data = await res.json();
-                    // Si l'API renvoie un objet unique, le convertir en tableau
+                    // Si l'API renvoie un objet unique, on le convertir en tableau
                     const appointmentsArray = Array.isArray(data) ? data : (data ? [data] : []);
                     setAppointments(appointmentsArray);
                 } else {
@@ -133,7 +133,6 @@ const RendezVous = () => {
         };
     });
 
-    // Filtrer les rendez-vous par le nom du soignant
     const filteredAppointments = enrichedAppointments.filter(app => {
         const query = searchQuery.toLowerCase();
         return app.soignantName.toLowerCase().includes(query);

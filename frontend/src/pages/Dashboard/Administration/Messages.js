@@ -9,7 +9,6 @@ const Messages = () => {
     const [messages, setMessages] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
 
-    // Récupérer tous les messages depuis l'API
     useEffect(() => {
         const fetchMessages = async () => {
             try {

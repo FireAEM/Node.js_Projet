@@ -20,6 +20,17 @@ class Specialite {
         return result.rows[0]
     }
 
+    static async getSpecialiteBySoignantId(id_soignant) {
+        const result = await pool.query(`
+            SELECT specialite.nom 
+            FROM soignant_specialite 
+            JOIN specialite ON soignant_specialite.id_specialite = specialite.id_specialite
+            WHERE soignant_specialite.id_soignant = $1
+        `, [id_soignant]);
+        return result.rows;
+    }
+    
+
     static async createSpecialite({nom}) {
         const result = await pool.query(
             'INSERT INTO specialite (nom) VALUES ($1) RETURNING *',

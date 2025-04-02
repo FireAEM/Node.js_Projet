@@ -30,7 +30,6 @@ const SoignantCompte = () => {
     });
     const [message, setMessage] = useState('');
 
-    // Récupération des données soignant spécifiques
     useEffect(() => {
         const fetchSoignantData = async () => {
             try {
@@ -42,7 +41,7 @@ const SoignantCompte = () => {
                         ...prev,
                         rpps: data.rpps || "",
                         id_etablissement: data.id_etablissement || "",
-                        ids_specialite: data.ids_specialite || []  // Assurez-vous que le backend renvoie un tableau ou adaptez-le
+                        ids_specialite: data.ids_specialite || []
                     }));
                 }
             } catch (error) {
@@ -118,7 +117,7 @@ const SoignantCompte = () => {
                 body: JSON.stringify({
                     rpps: parseInt(formData.rpps),
                     id_etablissement: parseInt(formData.id_etablissement),
-                    id_utilisateur: user.id_utilisateur, // Ajout indispensable
+                    id_utilisateur: user.id_utilisateur,
                     // Conversion en nombres pour chaque spécialité
                     ids_specialite: formData.ids_specialite.map(id => parseInt(id))
                 })

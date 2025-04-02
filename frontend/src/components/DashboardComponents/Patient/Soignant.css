@@ -1,0 +1,81 @@
+.soignantItem {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 25px;
+    padding: 25px;
+    background-color: white;
+    border: 1px solid var(--border-color2);
+    border-radius: 20px;
+}
+
+.soignantItem > div {
+    flex: 1;
+}
+
+.soignantItemLeft {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+}
+
+.soignantItemLeft > div > h2 {
+    margin: 0;
+}
+.soignantItemLeft > div > p {
+    margin: 0;
+    font-weight: 300;
+}
+
+.soignantItemLeft > div:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+}
+
+.soignantItemRight {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.tabs {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.tabs > button, .timeSlots > button {
+    padding: 10px;
+    border: 1px solid var(--border-color2);
+    border-radius: 50px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.25s;
+}
+.tabs > button:hover, .timeSlots > button:hover {
+    background-color: var(--accent-color1);
+    color: var(--text-color);
+}
+.tabs > button:active, .timeSlots > button:active {
+    background-color: var(--accent-color2);
+    color: var(--text-color);
+    transform: scale(0.95);
+}
+
+.tabs > button.active, .timeSlots > button.active {
+    border: 1px solid black;
+}
+
+.timeSlots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+.timeSlots > button {
+    padding: 5px;
+    border-radius: 5px;
+}

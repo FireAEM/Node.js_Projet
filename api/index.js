@@ -239,6 +239,16 @@ app.get('/specialite/:id_specialite', async (req, res) => {
     }
 });
 
+app.get('/specialite/soignant/:id_soignant', async (req, res) => {
+    try {
+        const specialite = await Specialite.getSpecialiteBySoignantId(req.params.id_soignant);
+        specialite ? res.status(200).json(specialite) : res.status(404).json({ message: "Specialite avec cet id soignant non trouvé" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
 app.put('/specialite/:id_specialite', async (req, res) => {
     try {
         const updatedSpecialite = await Specialite.updateSpecialite(req.params.id_specialite, req.body);
