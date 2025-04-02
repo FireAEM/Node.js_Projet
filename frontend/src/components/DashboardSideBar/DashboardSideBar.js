@@ -10,7 +10,7 @@ const DashboardSideBar = ({ type, user }) => {
     let navLinks = [];
     if (type === "patient") {
         navLinks = [
-            { link: "/dashboard/patient/soignants", text: "Soignants", image: "/images/soignant_clair.png" },
+            { link: "/dashboard/patient/soignant", text: "Soignants", image: "/images/soignant_clair.png" },
             { link: "/dashboard/patient/rendezvous", text: "Rendez-vous", image: "/images/calendrier_clair.png" },
             { link: "/dashboard/patient/dossiermedical", text: "Dossier Médical", image: "/images/dossier_clair.png" }
         ];
