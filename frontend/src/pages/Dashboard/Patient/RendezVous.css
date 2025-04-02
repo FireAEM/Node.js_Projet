@@ -8,29 +8,6 @@
     margin: 0;
 }
 
-.dashboardSearch {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px;
-    background-color: var(--background-color2);
-    border: 1px solid var(--border-color2);
-    border-radius: 25px;
-    gap: 10px;
-}
-.dashboardSearch input {
-    padding: 10px;
-    border: none;
-    border-radius: 50px;
-    background-color: transparent;
-    color: var(--text-color);
-}
-.dashboardSearch img {
-    width: 20px;
-    height: auto;
-    margin: 5px;
-}
-
 .rendezVous {
     display: flex;
     flex-direction: row;

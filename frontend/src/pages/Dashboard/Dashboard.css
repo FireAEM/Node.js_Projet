@@ -13,3 +13,45 @@
     padding: 50px;
     width: calc(80vw - 100px);
 }
+
+.dashboardSearch {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    background-color: var(--background-color2);
+    border: 1px solid var(--border-color2);
+    border-radius: 25px;
+    gap: 10px;
+}
+.dashboardSearch input {
+    padding: 10px;
+    border: none;
+    border-radius: 50px;
+    background-color: transparent;
+    color: var(--text-color);
+}
+.dashboardSearch img {
+    width: 20px;
+    height: auto;
+    margin: 5px;
+}
+
+.accountPage {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 25px;
+}
+.accountPage > h1 {
+    margin: 0;
+}
+.accountPage > form {
+    width: 50%;
+}
+
+.formMessage {
+    padding: 5px 10px;
+    background-color: var(--main-color1);
+    border-radius: 10px;
+}

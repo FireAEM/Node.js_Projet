@@ -96,14 +96,14 @@ const AdminCompte = () => {
     };
 
     return (
-        <div>
-            <h2>Mon Compte - Administration</h2>
+        <div className='accountPage'>
+            <h1>Mon Compte - Administration</h1>
             <Form data={formConfig} onSubmit={handleSubmit} />
             <Button
                 text="Se déconnecter"
                 onClick={handleLogout}
             />
-            {message && <p>{message}</p>}
+            {message && <p className='formMessage'>{message}</p>}
         </div>
     );
 };

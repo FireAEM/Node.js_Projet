@@ -212,14 +212,14 @@ const SoignantCompte = () => {
     };
 
     return (
-        <div>
-            <h2>Mon Compte - Soignant</h2>
+        <div className='accountPage'>
+            <h1>Mon Compte - Soignant</h1>
             <Form data={formConfig} onSubmit={handleSubmit} />
             <Button
                 text="Se déconnecter"
                 onClick={handleLogout}
             />
-            {message && <p>{message}</p>}
+            {message && <p className='formMessage'>{message}</p>}
         </div>
     );
 };
